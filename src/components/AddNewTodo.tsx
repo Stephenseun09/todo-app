@@ -9,6 +9,7 @@ const AddNewTodo = () => {
   const inputRef = useRef<HTMLInputElement>(null);
   const formRef = useRef<HTMLFormElement>(null);
   const todoBg = Colors().todoBg;
+  const listFontColor = Colors().listFontColor;
   const addTodoHandler = (event: React.FormEvent) => {
     event.preventDefault();
     const enteredTodo = inputRef.current!.value;
@@ -39,6 +40,7 @@ const AddNewTodo = () => {
             placeholder="Create a new todo..."
             variant="filled"
             bg={todoBg}
+            color={listFontColor}
             w="100%"
             ref={inputRef}
             type="text"
