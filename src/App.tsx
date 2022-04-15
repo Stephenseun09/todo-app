@@ -1,38 +1,47 @@
-import * as React from "react"
-import {
-  ChakraProvider,
-  Box,
-  Text,
-  Link,
-  VStack,
-  Code,
-  Grid,
-  theme,
-} from "@chakra-ui/react"
-import { ColorModeSwitcher } from "./ColorModeSwitcher"
-import { Logo } from "./Logo"
+import { Box, ChakraProvider, useColorModeValue } from "@chakra-ui/react";
+import Bottom from "./components/Bottom";
+import Header from "./components/Header";
+import AddNewTodo from "./components/AddNewTodo";
+import Todos from "./components/Todos";
+import theme from "./styles/theme";
 
-export const App = () => (
-  <ChakraProvider theme={theme}>
-    <Box textAlign="center" fontSize="xl">
-      <Grid minH="100vh" p={3}>
-        <ColorModeSwitcher justifySelf="flex-end" />
-        <VStack spacing={8}>
-          <Logo h="40vmin" pointerEvents="none" />
-          <Text>
-            Edit <Code fontSize="xl">src/App.tsx</Code> and save to reload.
-          </Text>
-          <Link
-            color="teal.500"
-            href="https://chakra-ui.com"
-            fontSize="2xl"
-            target="_blank"
-            rel="noopener noreferrer"
-          >
-            Learn Chakra
-          </Link>
-        </VStack>
-      </Grid>
-    </Box>
-  </ChakraProvider>
-)
+import bgDesktopDark from "./assets/bg-desktop-dark.jpg";
+import bgDesktopLight from "./assets/bg-desktop-light.jpg";
+import bgMobileDark from "./assets/bg-mobile-dark.jpg";
+import bgMobileLight from "./assets/bg-mobile-light.jpg";
+import Footer from "./components/Footer";
+
+export const App = () => {
+  const bgDesktop = useColorModeValue(bgDesktopLight, bgDesktopDark);
+  const bgMobile = useColorModeValue(bgMobileLight, bgMobileDark);
+
+  return (
+    <ChakraProvider theme={theme}>
+      <Box pos="relative">
+        <Box
+          w="100%"
+          h="16rem"
+          bgRepeat="no-repeat"
+          bgSize="cover"
+          bgPosition="center"
+          bgImage={{
+            base: `url('${bgMobile}')`,
+            md: `url(${bgDesktop})`,
+          }}
+          pos="absolute"
+          top="0"
+          left="0"
+          zIndex="-1"
+        />
+
+        <Box p="2rem" maxW="767px" m="0 auto">
+          <Header />
+          <AddNewTodo />
+          <Todos />
+          <Bottom />
+          <Footer />
+        </Box>
+      </Box>
+    </ChakraProvider>
+  );
+};
